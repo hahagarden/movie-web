@@ -1,0 +1,57 @@
+<!--Unit Converter project-->
+<!DOCTYPE html>
+<head></head>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function App(){
+        const[amounts, setAmounts]=React.useState(0);
+        const[flipped, setFlipped]=React.useState(false);
+        const onChange=(event)=>{
+            setAmounts(event.target.value);
+        }
+        const reset = () => setAmounts(0);
+        const onFlip = () => {
+            reset();
+            setFlipped((current)=>!current); //!flipped
+        }
+        return(
+            <div>
+                <h1 className="converter">Super Converter</h1>
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input 
+                        value={flipped ? amounts * 60 : amounts} //'value=' shows the value(minutes) on UI
+                        id="minutes" 
+                        placeholder="Minute" 
+                        type="number" 
+                        onChange={onChange}
+                        disabled={flipped===true}
+                    />
+                    <h4>we want to convert {amounts}</h4>
+                </div>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input 
+                        value={flipped ? amounts : amounts/60}
+                        id="hours" 
+                        placeholder="Hours" 
+                        type="number"
+                        onChange={onChange}
+                        disabled={!flipped} //flipped===flase
+                    />
+                </div>
+                <button onClick={reset}>reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+        )
+    }
+    const root=document.getElementById("root");
+    ReactDOM.render(<App />,root);
+</script>
+</html>
+
